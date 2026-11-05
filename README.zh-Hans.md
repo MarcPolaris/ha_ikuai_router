@@ -7,29 +7,24 @@
 [English](README.md) | **简体中文**
 
 面向 **iKuai 爱快路由器** 的 Home Assistant 自定义集成，基于爱快 **OpenAPI v4**。
-它把 [PraxiGEN/ha_ikuai_connect](https://github.com/PraxiGEN/ha_ikuai_connect)
-（令牌方案）和 [dscao/ikuai](https://github.com/dscao/ikuai)（传统 `/Action/call`
-方案）重新融合重写，并补上了两边都缺的东西：HTTPS 自动识别、逐条线路断线告警、
-流量排行、一键临时封禁、健康度告警。
-
 采用令牌认证，**不会在 Home Assistant 里保存路由器密码**。
 
----
+设计上参考了 [PraxiGEN/ha_ikuai_connect](https://github.com/PraxiGEN/ha_ikuai_connect)
+（令牌方案）和 [dscao/ikuai](https://github.com/dscao/ikuai)（传统 `/Action/call`
+方案），后者作为可选能力保留，用于补齐 OpenAPI 没有暴露的少量控制项。
 
-## 特性对比
+## 功能
 
-| 能力 | ha_ikuai_connect | dscao/ikuai | 本集成 |
-|---|---|---|---|
-| 认证方式 | Bearer 令牌 | 账号密码（`sess_key`） | 令牌为主，密码可选 |
-| 路由器强制 HTTPS（302 → https） | ❌ 直接连不上 | ❌ 直接连不上 | ✅ 自动探测协议与端口 |
-| 每条 WAN 独立断线告警 | ❌ | ❌ | ✅ 每条 WAN 一个二元传感器 |
-| 每终端实体 | 仅追踪 | 仅追踪 | ✅ 追踪 + 在线 + 上下行速率 |
-| 流量排行 | 服务 | ❌ | ✅ 传感器 + 服务 |
-| 一键临时封禁（到点自动解封） | ❌ | ❌ | ✅ 服务 |
-| CPU / 内存 / 磁盘 / 固件告警 | ❌ | ❌ | ✅ |
-| 静态 DHCP 绑定 | ❌ | ❌ | ✅ 只读传感器 |
-| 事件 | 5 类 | ❌ | 5 类，带消息去重 |
-| 无无线硬件时的无线实体 | 生成一堆死实体 | 生成一堆死实体 | ✅ 自动跳过 |
+- 基于令牌的 HTTPS 认证，支持 HTTP 回退与重定向处理
+- 路由器健康度：CPU、内存、运行时长、连接数、累计与实时流量
+- 逐接口统计，每条 WAN 额外提供一个线路状态传感器
+- 终端追踪（`device_tracker`），属性含 IP、MAC、厂商、SSID 与信号强度
+- 二元传感器告警：CPU 高负载、内存高占用、日志分区空间不足、固件有更新
+- 流量排行与 DHCP 静态绑定
+- MAC 访问控制开关，以及黑/白名单模式选择
+- 事件实体：终端上下线、系统日志、DDNS 日志、无线日志、消息中心
+- 8 个服务，含临时封禁（到点自动解封）与通用 `call_api`
+- 只有检测到 AP 时才创建无线相关实体
 
 ## 支持范围
 

@@ -7,32 +7,29 @@
 **English** | [简体中文](README.zh-Hans.md)
 
 A Home Assistant custom integration for **iKuai (爱快) routers**, built on the
-iKuai **OpenAPI v4**. It is a ground-up rewrite that merges the ideas of
-[PraxiGEN/ha_ikuai_connect](https://github.com/PraxiGEN/ha_ikuai_connect) (token
-authentication) and [dscao/ikuai](https://github.com/dscao/ikuai) (legacy
-`/Action/call` control), then adds the things both were missing: HTTPS
-auto-detection, per-WAN link monitoring, traffic ranking, one-click temporary
-blocking and health alerts.
+iKuai **OpenAPI v4**. Token authentication means **no router password is ever
+stored** in Home Assistant.
 
-Token authentication means **no router password is ever stored** in Home
-Assistant.
+The design borrows from [PraxiGEN/ha_ikuai_connect](https://github.com/PraxiGEN/ha_ikuai_connect)
+(token authentication) and [dscao/ikuai](https://github.com/dscao/ikuai) (legacy
+`/Action/call` control), which is kept as an optional add-on for the few features
+OpenAPI does not expose.
 
----
+## Features
 
-## Highlights
-
-| Capability | ha_ikuai_connect | dscao/ikuai | This integration |
-|---|---|---|---|
-| Authentication | Bearer token | Username + password (`sess_key`) | Token first, password optional |
-| Router forces HTTPS (302 → https) | ❌ connection fails | ❌ connection fails | ✅ scheme/port auto-detected |
-| Per-WAN link down alert | ❌ | ❌ | ✅ one binary sensor per WAN |
-| Per-client entities | trackers only | trackers only | ✅ tracker + online + up/down rate |
-| Traffic ranking | service | ❌ | ✅ sensor + service |
-| Temporary block with auto-unblock | ❌ | ❌ | ✅ service |
-| CPU / memory / disk / firmware alerts | ❌ | ❌ | ✅ |
-| DHCP static bindings | ❌ | ❌ | ✅ read-only sensor |
-| Events | 5 kinds | ❌ | 5 kinds, with message de-duplication |
-| Wireless entities on non-wireless hardware | creates dead entities | creates dead entities | ✅ skipped automatically |
+- Token-based authentication over HTTPS, with HTTP fallback and redirect handling
+- Router health: CPU, memory, uptime, connection count, total and current traffic
+- Per-interface statistics, plus a connectivity sensor for every WAN line
+- Client tracking (`device_tracker`) with IP, MAC, vendor, SSID and signal
+- Health alerts as binary sensors: high CPU, high memory, low log storage,
+  firmware update available
+- Traffic ranking and DHCP static bindings
+- MAC access-control switches and blacklist/whitelist mode selection
+- Event entities for client presence, system log, DDNS log, wireless log and the
+  message center
+- Eight services, including temporary blocking with automatic unblock and a
+  generic `call_api` escape hatch
+- Wireless entities are only created when an AP is actually present
 
 ## Requirements
 
