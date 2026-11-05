@@ -1,0 +1,217 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to iKuai router",
+        "description": "Enter the router address and an OpenAPI token. {token_help}\nHTTP/HTTPS and port are detected automatically.",
+        "data": {
+          "host": "Router address",
+          "token": "OpenAPI token",
+          "verify_ssl": "Verify SSL certificate (disable for self-signed)"
+        }
+      },
+      "reauth_confirm": {
+        "title": "Update token",
+        "description": "The token is no longer valid. Please enter a new OpenAPI token.",
+        "data": {
+          "token": "OpenAPI token"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid or disabled token",
+      "cannot_connect": "Cannot reach the router, check the address and network",
+      "unsupported_firmware": "This firmware has no OpenAPI v4 (iKuai 4.0+ required)",
+      "legacy_auth": "Login with username/password failed",
+      "legacy_required": "Enabling legacy API requires both username and password",
+      "unknown": "Unexpected error, check the logs",
+      "tracker_not_found": "Could not resolve these trackers, check the name or MAC"
+    },
+    "abort": {
+      "already_configured": "This router is already configured",
+      "reauth_successful": "Token updated"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "iKuai Router options",
+        "description": "{count} clients online. Only tracked clients get device_tracker and per-client entities.",
+        "data": {
+          "scan_interval": "Polling interval (seconds)",
+          "trackers": "Tracked clients",
+          "enable_client_entities": "Create rate/online entities for tracked clients",
+          "offline_grace": "Offline grace period (minutes)",
+          "cpu_threshold": "CPU alert threshold (%)",
+          "mem_threshold": "Memory alert threshold (%)",
+          "disk_threshold": "Log partition alert threshold (%)",
+          "enable_legacy": "Enable legacy API (username/password)",
+          "legacy_username": "Username",
+          "legacy_password": "Password",
+          "trackers_extra": "Add trackers manually (name or MAC, comma separated)"
+        },
+        "data_description": {
+          "enable_client_entities": "Creates two rate sensors and one online binary sensor per tracked client",
+          "offline_grace": "Keeps a client online briefly after it disconnects, avoiding automation flapping",
+          "enable_legacy": "Unlocks ARP binding, traffic shaping switches and the WAN reconnect button",
+          "trackers_extra": "Use this for devices that are currently offline; partial names are matched"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "cpu_load": {
+        "name": "CPU usage"
+      },
+      "memory_usage": {
+        "name": "Memory usage"
+      },
+      "uptime": {
+        "name": "Uptime"
+      },
+      "temperature": {
+        "name": "CPU temperature"
+      },
+      "online_users": {
+        "name": "Online clients"
+      },
+      "connection_count": {
+        "name": "Connections"
+      },
+      "upload_speed": {
+        "name": "Upload speed"
+      },
+      "download_speed": {
+        "name": "Download speed"
+      },
+      "total_upload": {
+        "name": "Total upload"
+      },
+      "total_download": {
+        "name": "Total download"
+      },
+      "wan_ip": {
+        "name": "WAN IP"
+      },
+      "ap_online": {
+        "name": "Access points online"
+      },
+      "dhcp_static": {
+        "name": "Static bindings"
+      },
+      "traffic_today": {
+        "name": "Traffic today"
+      },
+      "firmware_version": {
+        "name": "Firmware version"
+      },
+      "upgrade_status": {
+        "name": "Firmware status"
+      },
+      "latest_backup": {
+        "name": "Latest backup"
+      },
+      "iface_upload": {
+        "name": "{iface} upload speed"
+      },
+      "iface_download": {
+        "name": "{iface} download speed"
+      },
+      "iface_total_up": {
+        "name": "{iface} total upload"
+      },
+      "iface_total_down": {
+        "name": "{iface} total download"
+      },
+      "iface_conn": {
+        "name": "{iface} connections"
+      },
+      "wan_v6_upload": {
+        "name": "{iface} IPv6 upload speed"
+      },
+      "wan_v6_download": {
+        "name": "{iface} IPv6 download speed"
+      },
+      "wan_v6_conn": {
+        "name": "{iface} IPv6 connections"
+      },
+      "disk_total": {
+        "name": "Disk capacity"
+      },
+      "disk_used": {
+        "name": "Disk used"
+      },
+      "disk_usage": {
+        "name": "Disk usage"
+      },
+      "client_download": {
+        "name": "Download rate"
+      },
+      "client_upload": {
+        "name": "Upload rate"
+      }
+    },
+    "binary_sensor": {
+      "cpu_high": {
+        "name": "High CPU load"
+      },
+      "memory_high": {
+        "name": "High memory usage"
+      },
+      "log_disk_low": {
+        "name": "Low log storage"
+      },
+      "firmware_update": {
+        "name": "Firmware update available"
+      },
+      "wan_connectivity": {
+        "name": "{iface} connectivity"
+      }
+    },
+    "switch": {
+      "mac_rule": {
+        "name": "MAC rule"
+      }
+    },
+    "select": {
+      "acl_mode": {
+        "name": "Global access control mode"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "Reboot router"
+      },
+      "reconnect_wan": {
+        "name": "Reconnect WAN1"
+      },
+      "check_upgrade": {
+        "name": "Check for updates"
+      },
+      "backup": {
+        "name": "Back up configuration"
+      },
+      "start_upgrade": {
+        "name": "Start firmware upgrade"
+      }
+    },
+    "event": {
+      "terminal_presence": {
+        "name": "Client presence"
+      },
+      "system_log": {
+        "name": "System log"
+      },
+      "ddns_log": {
+        "name": "DDNS log"
+      },
+      "wireless_log": {
+        "name": "Wireless log"
+      },
+      "message_center": {
+        "name": "Message center"
+      }
+    }
+  }
+}

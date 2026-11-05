@@ -1,0 +1,217 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "连接 iKuai 路由器",
+        "description": "填入路由器地址与 OpenAPI 令牌。{token_help}\n集成会自动识别 HTTPS/HTTP 与端口。",
+        "data": {
+          "host": "路由器地址",
+          "token": "OpenAPI 令牌",
+          "verify_ssl": "校验 SSL 证书（自签证书请关闭）"
+        }
+      },
+      "reauth_confirm": {
+        "title": "更新令牌",
+        "description": "令牌已失效，请填入新的 OpenAPI 令牌。",
+        "data": {
+          "token": "OpenAPI 令牌"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "令牌无效或已被禁用",
+      "cannot_connect": "无法连接路由器，请检查地址与网络",
+      "unsupported_firmware": "该固件不支持 OpenAPI v4（需要 iKuai 4.0 及以上）",
+      "legacy_auth": "账号密码登录失败，请检查后重试",
+      "legacy_required": "启用传统接口需要同时填写账号和密码",
+      "unknown": "未知错误，请查看日志",
+      "tracker_not_found": "找不到这些终端：请检查设备名或 MAC 是否写对"
+    },
+    "abort": {
+      "already_configured": "该路由器已经添加过了",
+      "reauth_successful": "令牌已更新"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "iKuai Router 选项",
+        "description": "当前在线终端 {count} 台。选择需要长期追踪的终端后，才会生成 device_tracker 与终端实体。",
+        "data": {
+          "scan_interval": "轮询间隔（秒）",
+          "trackers": "追踪的终端",
+          "enable_client_entities": "为追踪终端生成速率/在线实体",
+          "offline_grace": "离线宽限（分钟）",
+          "cpu_threshold": "CPU 告警阈值（%）",
+          "mem_threshold": "内存告警阈值（%）",
+          "disk_threshold": "日志分区告警阈值（%）",
+          "enable_legacy": "启用传统接口（需要账号密码）",
+          "legacy_username": "账号",
+          "legacy_password": "密码",
+          "trackers_extra": "手动添加终端（设备名或 MAC，逗号分隔）"
+        },
+        "data_description": {
+          "enable_client_entities": "每个被追踪终端生成 2 个速率传感器和 1 个在线二元传感器",
+          "offline_grace": "终端短暂掉线时保持在线状态，避免自动化误触发",
+          "enable_legacy": "开启后可获得 ARP 绑定校验、智能流控开关和 WAN 重拨按钮",
+          "trackers_extra": "用于添加当前不在线的终端，例如关机中的手机；名字可部分匹配"
+        }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "cpu_load": {
+        "name": "CPU 使用率"
+      },
+      "memory_usage": {
+        "name": "内存使用率"
+      },
+      "uptime": {
+        "name": "运行时长"
+      },
+      "temperature": {
+        "name": "CPU 温度"
+      },
+      "online_users": {
+        "name": "在线终端数"
+      },
+      "connection_count": {
+        "name": "连接数"
+      },
+      "upload_speed": {
+        "name": "上传速度"
+      },
+      "download_speed": {
+        "name": "下载速度"
+      },
+      "total_upload": {
+        "name": "累计上传"
+      },
+      "total_download": {
+        "name": "累计下载"
+      },
+      "wan_ip": {
+        "name": "WAN IP"
+      },
+      "ap_online": {
+        "name": "在线 AP 数"
+      },
+      "dhcp_static": {
+        "name": "静态绑定数量"
+      },
+      "traffic_today": {
+        "name": "今日总流量"
+      },
+      "firmware_version": {
+        "name": "固件版本"
+      },
+      "upgrade_status": {
+        "name": "固件更新状态"
+      },
+      "latest_backup": {
+        "name": "最新备份"
+      },
+      "iface_upload": {
+        "name": "{iface} 上传速度"
+      },
+      "iface_download": {
+        "name": "{iface} 下载速度"
+      },
+      "iface_total_up": {
+        "name": "{iface} 累计上传"
+      },
+      "iface_total_down": {
+        "name": "{iface} 累计下载"
+      },
+      "iface_conn": {
+        "name": "{iface} 连接数"
+      },
+      "wan_v6_upload": {
+        "name": "{iface} IPv6 上传速度"
+      },
+      "wan_v6_download": {
+        "name": "{iface} IPv6 下载速度"
+      },
+      "wan_v6_conn": {
+        "name": "{iface} IPv6 连接数"
+      },
+      "disk_total": {
+        "name": "磁盘总容量"
+      },
+      "disk_used": {
+        "name": "磁盘已用"
+      },
+      "disk_usage": {
+        "name": "磁盘使用率"
+      },
+      "client_download": {
+        "name": "下载速率"
+      },
+      "client_upload": {
+        "name": "上传速率"
+      }
+    },
+    "binary_sensor": {
+      "cpu_high": {
+        "name": "CPU 高负载"
+      },
+      "memory_high": {
+        "name": "内存高占用"
+      },
+      "log_disk_low": {
+        "name": "日志分区空间不足"
+      },
+      "firmware_update": {
+        "name": "固件有更新"
+      },
+      "wan_connectivity": {
+        "name": "{iface} 线路状态"
+      }
+    },
+    "switch": {
+      "mac_rule": {
+        "name": "MAC 规则"
+      }
+    },
+    "select": {
+      "acl_mode": {
+        "name": "全局访问控制模式"
+      }
+    },
+    "button": {
+      "reboot": {
+        "name": "重启路由器"
+      },
+      "reconnect_wan": {
+        "name": "重拨 WAN1"
+      },
+      "check_upgrade": {
+        "name": "检测固件更新"
+      },
+      "backup": {
+        "name": "备份配置"
+      },
+      "start_upgrade": {
+        "name": "开始固件升级"
+      }
+    },
+    "event": {
+      "terminal_presence": {
+        "name": "终端上下线"
+      },
+      "system_log": {
+        "name": "系统日志"
+      },
+      "ddns_log": {
+        "name": "DDNS 日志"
+      },
+      "wireless_log": {
+        "name": "无线终端日志"
+      },
+      "message_center": {
+        "name": "消息中心"
+      }
+    }
+  }
+}

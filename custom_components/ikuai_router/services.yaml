@@ -1,0 +1,173 @@
+get_traffic_ranking:
+  name: 获取流量排行
+  description: 返回当日终端流量排行（前 100 名，按总流量降序）。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+
+get_protocol_stats:
+  name: 获取终端协议分布
+  description: 返回指定终端当日各协议分类的流量。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    mac:
+      name: MAC 地址
+      required: true
+      example: "2a:56:85:f2:58:93"
+      selector:
+        text:
+    ip:
+      name: IP 地址（可选）
+      selector:
+        text:
+
+get_offline_history:
+  name: 获取离线历史
+  description: 返回最近下线终端的记录与流量。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    limit:
+      name: 条数
+      default: 20
+      selector:
+        number:
+          min: 1
+          max: 200
+          mode: box
+
+add_mac_rule:
+  name: 添加 MAC 规则
+  description: 在 MAC 访问控制中新增一条规则。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    mac:
+      name: MAC 地址
+      required: true
+      example: "2a:56:85:f2:58:93"
+      selector:
+        text:
+    tagname:
+      name: 规则名称
+      selector:
+        text:
+    comment:
+      name: 备注
+      selector:
+        text:
+    expires:
+      name: 到期时间（unix 时间戳，0 为永久）
+      default: 0
+      selector:
+        number:
+          min: 0
+          mode: box
+
+delete_mac_rule:
+  name: 删除 MAC 规则
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    rule_id:
+      name: 规则 ID
+      required: true
+      selector:
+        number:
+          min: 1
+          mode: box
+
+block_client:
+  name: 临时封禁终端
+  description: 在黑名单模式下为该终端添加一条访问控制规则，可设置自动解封时间。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    mac:
+      name: MAC 地址
+      required: true
+      selector:
+        text:
+    minutes:
+      name: 封禁时长（分钟，0 为永久）
+      default: 0
+      selector:
+        number:
+          min: 0
+          max: 10080
+          unit_of_measurement: min
+          mode: box
+
+unblock_client:
+  name: 解除终端封禁
+  description: 删除由本集成添加的临时封禁规则。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    mac:
+      name: MAC 地址
+      required: true
+      selector:
+        text:
+
+call_api:
+  name: 调用任意接口
+  description: 直接调用路由器 OpenAPI（探索性能力，路径需以 /api/ 开头）。
+  fields:
+    device_id:
+      name: 路由器
+      selector:
+        device:
+          integration: ikuai_router
+    path:
+      name: 接口路径
+      required: true
+      example: /api/v4.0/monitoring/clients-online
+      selector:
+        text:
+    method:
+      name: 方法
+      default: GET
+      selector:
+        select:
+          options: [GET, POST, PUT, PATCH, DELETE]
+    params:
+      name: 参数（JSON 字符串或对象）
+      example: '{"limit": 500}'
+      selector:
+        object:
+    timeout:
+      name: 超时（秒）
+      default: 15
+      selector:
+        number:
+          min: 1
+          max: 120
+          mode: box
+    return_raw:
+      name: 返回完整响应体
+      default: false
+      selector:
+        boolean:

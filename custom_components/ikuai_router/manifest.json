@@ -1,0 +1,13 @@
+{
+  "domain": "ikuai_router",
+  "name": "iKuai Router",
+  "codeowners": ["@MarcPolaris"],
+  "config_flow": true,
+  "documentation": "https://github.com/MarcPolaris/ha_ikuai_router",
+  "integration_type": "hub",
+  "iot_class": "local_polling",
+  "issue_tracker": "https://github.com/MarcPolaris/ha_ikuai_router/issues",
+  "requirements": [],
+  "dependencies": [],
+  "version": "1.0.0"
+}
